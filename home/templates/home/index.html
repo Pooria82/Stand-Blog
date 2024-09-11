@@ -47,7 +47,7 @@
 <header class="">
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><h2>Stand Blog<em>.</em></h2></a>
+            <a class="navbar-brand" href="index.html"><h2>Structures<em>.</em></h2></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -72,24 +72,30 @@
                         <a class="nav-link" href="contact.html">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        {% if request.user.is_authenticated %}
-                            {% if request.user.firstname %}
-                                <a class="nav-link" href="">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                        <divc class="d-flex">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.firstname %}
+                                    <a class="nav-link"
+                                       href="">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+                                {% else %}
+                                    <a class="nav-link text-black-50" href="">{{ request.user.username }}</a>
+                                {% endif %}
+                                <a class="nav-link text-danger" href="{% url 'account:logout' %}">Logout</a>
+                                <span>
+                                {% if user.profile.image %}
+                                    <img src="{{ user.profile.image.url }}" width="50px" height="50px"
+                                         style="border-radius: 100%" alt="">
+                                {% else %}
+                                    <img src="{% static 'images/icons/userProfile.png' %}" width="50px" height="50px"
+                                         style="border-radius: 100%" alt="">
+                                {% endif %}
+                            </span>
                             {% else %}
-                                <a class="nav-link text-black-50" href="">{{ request.user.username }}</a>
-                            {% endif %}
-                        {% else %}
-                            <divc class="d-flex">
                                 <a class="nav-link" href="{% url 'account:login' %}">Login</a>
                                 <a class="nav-link" href="{% url 'account:register' %}">Register</a>
-                            </divc>
-                        {% endif %}
+                            {% endif %}
+                        </divc>
                     </li>
-                    {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link text-danger" href="{% url 'account:logout' %}">Logout</a>
-                        </li>
-                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -102,7 +108,7 @@
     <div class="container-fluid">
         <div class="owl-banner owl-carousel">
             {% if posts %}
-            	{% for post in posts %}
+                {% for post in posts %}
                     <div class="item">
                         <img src="{{ post.image.url }}" alt="{{ post.title }}">
                         <div class="item-content">
